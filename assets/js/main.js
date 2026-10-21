@@ -364,57 +364,6 @@ function initSvcScrollMobile() {
   });
 }
 
-/* ─── 7. WORD CYCLING — char-by-char reveal ──────────────── */
-function initTypewriter(words = ['Music', 'Brands', 'Potential', 'Projects']) {
-  const el = document.querySelector('[data-typewriter]');
-  if (!el) return;
-  let current = 0;
-
-  function buildChars(word) {
-    el.innerHTML = '';
-    [...word].forEach(ch => {
-      const s = document.createElement('span');
-      s.className = 'tw-char';
-      s.textContent = ch;
-      el.appendChild(s);
-    });
-    return el.querySelectorAll('.tw-char');
-  }
-
-  const init = buildChars(words[0]);
-  gsap.set(init, { yPercent: 0, opacity: 1 });
-
-  function cycle() {
-    const next    = (current + 1) % words.length;
-    const leaving = [...el.querySelectorAll('.tw-char')];
-
-    gsap.to(leaving, {
-      yPercent: -115,
-      opacity:  0,
-      duration: 0.28,
-      stagger:  { amount: 0.18, from: 'start' },
-      ease:     'power2.in',
-      onComplete() {
-        const entering = buildChars(words[next]);
-        gsap.set(entering, { yPercent: 90, opacity: 0 });
-        gsap.to(entering, {
-          yPercent: 0,
-          opacity:  1,
-          duration: 0.32,
-          stagger:  { amount: 0.22, from: 'start' },
-          ease:     'power3.out',
-          onComplete() {
-            current = next;
-            setTimeout(cycle, 2600);
-          },
-        });
-      },
-    });
-  }
-
-  setTimeout(cycle, 2600);
-}
-
 /* ─── 8. MA RECORDS TEXT REVEAL ──────────────────────────── */
 function initMaTextReveal() {
   const section = document.querySelector('.ma');
@@ -644,9 +593,6 @@ function injectContent(d) {
   text('.button-020__hover-text',   d.nav_cta);
 
   // Hero
-  text('.hero-hl-bold', d.hero_bold);
-  text('.loc-city',     d.hero_location_city);
-  text('.loc-world',    d.hero_location_world);
   html('.hero-desc',    d.hero_desc);
   text('.hero-cta-label', d.hero_cta_label);
 
@@ -815,6 +761,22 @@ function initMagneticEffect() {
   });
 }
 
+/* ─── NAV BACKGROUND (transparent over hero) ─────────────── */
+function initNavBackground() {
+  const nav  = document.querySelector('.nav');
+  const hero = document.querySelector('.hero');
+  if (!nav || !hero) return;
+
+  const update = () => {
+    const pastHero = hero.getBoundingClientRect().bottom <= nav.offsetHeight;
+    nav.classList.toggle('is-solid', pastHero);
+  };
+
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+}
+
 /* ─── MOBILE NAV ─────────────────────────────────────────── */
 function initMobileNav() {
   const toggle     = document.querySelector('[data-nav-toggle]');
@@ -873,21 +835,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   initMagneticEffect();
   initCopyEmailClipboard();
   initMobileNav();
+  initNavBackground();
   initSvcHoverDesktop();
   initLoaderThreeSteps();
   initVideoTapToPlay();
 
-  let heroWords = ['Music', 'Brands', 'Potential', 'Projects'];
   try {
     const res  = await fetch('/content/data.json?v=' + Date.now());
     const data = await res.json();
-    if (Array.isArray(data.hero_words) && data.hero_words.length) heroWords = data.hero_words;
     injectContent(data);
   } catch {}
 
   // 3.2s — enough for loader animation (≈ 3.0s) + brief overlap
   gsap.delayedCall(3.2, () => {
-    initTypewriter(heroWords);
     initMaskTextReveal();
     initNumberOdometer();
     initProgressNavigation();
