@@ -648,7 +648,9 @@ body:has([data-cursor]:hover) .cursor {
 .loader-logo__base { opacity: 0.2; }
 .loader-logo__fill {
   position: absolute; inset: 0;
-  clip-path: inset(0% 100% 0% 0%);
+  --p: 0;      /* fill progress, 0 → 117.4 */
+  --slant: 17.4; /* edge leans 17.4% of the logo width over its height (≈34°), per Figma */
+  clip-path: polygon(0 0, calc(var(--p) * 1%) 0, calc((var(--p) - var(--slant)) * 1%) 100%, 0 100%);
 }
 
 /* ═══════════════════════════════════════════════════════

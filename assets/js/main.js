@@ -26,18 +26,18 @@ function initLoaderThreeSteps() {
   });
 
   tl.set(screen, { display: 'flex' })
-    .set(fill,   { clipPath: 'inset(0% 100% 0% 0%)' })
+    .set(fill,   { '--p': 0 })
 
     // Step 1 — 0 → 33
-    .to(fill, { clipPath: 'inset(0% 67% 0% 0%)', duration: 0.68, ease: 'power2.inOut' })
+    .to(fill, { '--p': 39.13, duration: 0.68, ease: 'power2.inOut' })
     .to({}, { duration: 0.23 })
 
     // Step 2 — 33 → 67
-    .to(fill, { clipPath: 'inset(0% 33% 0% 0%)', duration: 0.53, ease: 'power2.inOut' })
+    .to(fill, { '--p': 78.27, duration: 0.53, ease: 'power2.inOut' })
     .to({}, { duration: 0.19 })
 
     // Step 3 — 67 → 100
-    .to(fill, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.45, ease: 'power2.inOut' })
+    .to(fill, { '--p': 117.4, duration: 0.45, ease: 'power2.inOut' })
 
     .to({}, { duration: 0.3 });
 }
