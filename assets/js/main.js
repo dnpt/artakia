@@ -377,7 +377,7 @@ function initMaTextReveal() {
     once: true,
     onEnter() {
       gsap.to(ems, {
-        color: '#f2f0ed',
+        color: '#ffffff',
         duration: 0.45,
         stagger: 0.09,
         ease: 'power2.out',
@@ -397,7 +397,7 @@ function initBgTextReveal() {
     start: 'top 65%',
     once: true,
     onEnter() {
-      gsap.to(ems, { color: '#f2f0ed', duration: 0.45, stagger: 0.09, ease: 'power2.out' });
+      gsap.to(ems, { color: '#ffffff', duration: 0.45, stagger: 0.09, ease: 'power2.out' });
     },
   });
 }
@@ -704,6 +704,7 @@ function injectContent(d) {
   }
 
   // Services
+  text('.services-h', d.services_heading);
   if (d.services) {
     document.querySelectorAll('.svc-row').forEach((row, i) => {
       const svc = d.services[i];

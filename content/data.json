@@ -23,13 +23,13 @@
       "value": 30,
       "label": "Streams",
       "prefix": "+",
-      "unit": "MLN"
+      "unit": "M"
     },
     {
       "value": 10,
       "label": "Viewers & engagement",
       "prefix": "+",
-      "unit": "MLN"
+      "unit": "M"
     },
     {
       "value": 360,
@@ -72,6 +72,7 @@
   "bg_p_1": "Artakia draws on time spent across <em>four disciplines.</em> We have worked in <em>talent management,</em> representing leading screen talent and understanding how <em>talent is built and protected.</em> In <em>media management,</em> positioning talent and projects across press and public.",
   "bg_p_2": "In social media marketing and <em>audience building,</em> building <em>presence that holds over time.</em> And in <em>video production</em> across every phase, from <em>concept to final cut.</em> Together these experiences gave us one place where talent management, <em>story, strategy and production</em> work as one.",
   "video_url": "https://player.vimeo.com/video/1223971185",
+  "services_heading": "Services.",
   "services": [
     {
       "name": "Label & Development",

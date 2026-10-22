@@ -94,7 +94,7 @@ collections:
               - { label: Value,  name: value,  widget: number }
               - { label: Label,  name: label,  widget: string }
               - { label: Prefix, name: prefix, widget: string, hint: "+ or °" }
-              - { label: Unit,   name: unit,   widget: string, hint: "MLN or leave empty", required: false }
+              - { label: Unit,   name: unit,   widget: string, hint: "M (million) or leave empty", required: false }
 
           # ── PARTNERS (MARQUEE) ────────────────────────────────
           - label: Partners
@@ -152,6 +152,10 @@ collections:
             hint: "YouTube or Vimeo URL. Leave empty to show placeholder."
 
           # ── SERVICES ──────────────────────────────────────────
+          - label: "Services — Heading"
+            name: services_heading
+            widget: string
+
           - label: Services
             name: services
             widget: list
