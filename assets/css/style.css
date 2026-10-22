@@ -252,7 +252,8 @@ button { font: inherit; color: inherit; }
 /* Hero heading — Large */
 .hero-desc {
   font-size: var(--fs-large); font-weight: 600; letter-spacing: var(--ls-tight); line-height: 1.05;
-  color: var(--grey); max-width: calc(8 * var(--col) + 7 * var(--gutter)); /* cols 1–8 */
+  color: var(--grey); max-width: 19.35em; /* 1040px at 1440, scales with the text */
+  text-wrap: pretty; /* no single word left on the last line */
 }
 .hero-desc em { font-style: normal; color: var(--text); }
 
@@ -632,7 +633,7 @@ body:has([data-cursor]:hover) .cursor {
 @media (hover: none) and (pointer: coarse) { .cursor { display: none; } }
 
 /* ═══════════════════════════════════════════════════════
-   LOADER — kept in px (JS reads H from DOM offsetHeight)
+   LOADER — logo fills in white from left to right
 ═══════════════════════════════════════════════════════ */
 .loading-container {
   position: fixed; inset: 0; z-index: 200;
@@ -640,37 +641,14 @@ body:has([data-cursor]:hover) .cursor {
 }
 .loading-screen {
   display: none; width: 100%; height: 100%; position: relative;
+  align-items: center; justify-content: center;
 }
-.loading__progress {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 16px; background: rgba(184, 199, 217, 0.03);
-}
-.loading__progress-inner {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 100%;
-  background: var(--accent); transform-origin: bottom;
-  transform: scaleY(0); will-change: transform;
-}
-.loading__numbers {
-  position: absolute; bottom: 70px; left: 76px;
-  display: flex; align-items: flex-end; gap: 0;
-}
-.loading__number-group {
-  overflow: hidden; height: 180px; padding-top: 15px;
-}
-.loading__number-wrap {
-  display: flex; flex-direction: column; will-change: transform;
-}
-.loading__number {
-  display: block; height: 165px;
-  font-size: 165px; font-weight: 600; font-style: normal;
-  letter-spacing: -15px; line-height: 1;
-  color: var(--text); padding: 0 9px;
-}
-.loading__percentage-wrap { padding-bottom: 96px; margin-left: 6px; }
-.loading__percentage {
-  font-size: 55px; font-weight: 600;
-  letter-spacing: -13px; line-height: 1;
-  color: var(--text); opacity: 0.5;
+.loader-logo { position: relative; width: 19.85em; } /* ≈305px at 1440 */
+.loader-logo img { display: block; width: 100%; height: auto; }
+.loader-logo__base { opacity: 0.2; }
+.loader-logo__fill {
+  position: absolute; inset: 0;
+  clip-path: inset(0% 100% 0% 0%);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1001,12 +979,6 @@ body:has([data-cursor]:hover) .cursor {
   /* Services */
   .svc-row { padding: var(--space-s) var(--margin); }
 
-  /* Loader — scale down on mobile (JS reads offsetHeight from DOM) */
-  .loading__numbers       { left: 28px; bottom: 50px; }
-  .loading__number-group  { height: 96px; padding-top: 8px; }
-  .loading__number        { height: 88px; font-size: 88px; letter-spacing: -8px; padding: 0 5px; }
-  .loading__percentage-wrap { padding-bottom: 52px; }
-  .loading__percentage    { font-size: 30px; letter-spacing: -7px; }
 
   /* Video box */
 

@@ -7,53 +7,37 @@
 
 gsap.registerPlugin(ScrollTrigger, SplitText, ScrollToPlugin, CustomEase);
 
-/* ─── 1. NUMBER LOADER (Osmo Supply 3-step) ──────────── */
+/* ─── 1. LOGO LOADER (3-step fill) ───────────────────── */
 function initLoaderThreeSteps() {
   const container = document.querySelector('.loading-container');
   const screen    = document.querySelector('.loading-screen');
-  if (!container || !screen) return;
-
-  /* Read digit height while screen is hidden: temporarily reveal off-screen */
-  screen.style.visibility = 'hidden';
-  screen.style.display    = 'flex';
-  const H = document.querySelector('.loading__number')?.offsetHeight || 165;
-  screen.style.display    = '';
-  screen.style.visibility = '';
+  const fill      = document.querySelector('.loader-logo__fill');
+  if (!container || !screen || !fill) return;
 
   const tl = gsap.timeline({
     onComplete() {
-      gsap.to(screen, {
-        yPercent: -100,
+      gsap.to(container, {
+        autoAlpha: 0,
         duration: 0.6,
-        ease: 'power3.inOut',
+        ease: 'power2.out',
         onComplete() { container.style.display = 'none'; },
       });
     },
   });
 
   tl.set(screen, { display: 'flex' })
-    .set('.loading__progress-inner', { scaleY: 0, transformOrigin: 'bottom' })
-    .set('.loading__number-wrap',    { y: 0 })
+    .set(fill,   { clipPath: 'inset(0% 100% 0% 0%)' })
 
     // Step 1 — 0 → 33
-    .to('.loading__progress-inner',          { scaleY: 0.33, duration: 0.68, ease: 'power2.inOut' })
-    .to('.is--second .loading__number-wrap', { y: -(3 * H), duration: 0.68, ease: 'power2.inOut' }, '<')
-    .to('.is--third  .loading__number-wrap', { y: -(3 * H), duration: 0.68, ease: 'power2.inOut' }, '<')
-
+    .to(fill, { clipPath: 'inset(0% 67% 0% 0%)', duration: 0.68, ease: 'power2.inOut' })
     .to({}, { duration: 0.23 })
 
     // Step 2 — 33 → 67
-    .to('.loading__progress-inner',          { scaleY: 0.67, duration: 0.53, ease: 'power2.inOut' })
-    .to('.is--second .loading__number-wrap', { y: -(6 * H), duration: 0.53, ease: 'power2.inOut' }, '<')
-    .to('.is--third  .loading__number-wrap', { y: -(7 * H), duration: 0.53, ease: 'power2.inOut' }, '<')
-
+    .to(fill, { clipPath: 'inset(0% 33% 0% 0%)', duration: 0.53, ease: 'power2.inOut' })
     .to({}, { duration: 0.19 })
 
     // Step 3 — 67 → 100
-    .to('.loading__progress-inner',          { scaleY: 1,        duration: 0.45, ease: 'power2.inOut' })
-    .to('.is--first  .loading__number-wrap', { y: -(1  * H),     duration: 0.45, ease: 'power2.inOut' }, '<')
-    .to('.is--second .loading__number-wrap', { y: -(10 * H),     duration: 0.45, ease: 'power2.inOut' }, '<')
-    .to('.is--third  .loading__number-wrap', { y: -(10 * H),     duration: 0.45, ease: 'power2.inOut' }, '<')
+    .to(fill, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.45, ease: 'power2.inOut' })
 
     .to({}, { duration: 0.3 });
 }
