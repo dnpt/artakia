@@ -363,15 +363,17 @@ button { font: inherit; color: inherit; }
    M.A RECORDS
 ═══════════════════════════════════════════════════════ */
 .ma { padding: var(--space-l) var(--margin); }
-.ma-inner { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); align-items: start; }
-.ma-right { grid-column: 7 / 13; display: flex; flex-direction: column; gap: var(--space-m); }
+.ma-inner { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); row-gap: var(--space-s); align-items: start; }
+/* Heading cols 1–6 with the logo under it; text cols 7–12 starting level with the logo */
+.ma-h        { grid-column: 1 / 7; grid-row: 1; }
+.orchard-logo { grid-column: 1 / 7; grid-row: 2; }
+.ma-cols      { grid-column: 7 / 13; grid-row: 2; }
 .ma-h {
   font-size: var(--fs-display); font-weight: 600;
   letter-spacing: var(--ls-tight); line-height: 0.85; color: var(--text); white-space: nowrap;
 }
 .ma-h span { color: var(--accent); }
-.ma-body { display: flex; flex-direction: column; gap: var(--space-m); align-items: flex-end; }
-.ma-cols { display: flex; gap: var(--gutter); width: 100%; }
+.ma-cols { display: flex; flex-direction: column; gap: var(--space-s); } /* one column, like .bg-texts */
 .ma-col {
   flex: 1; font-size: var(--fs-body); font-weight: 500;
   letter-spacing: var(--ls-snug); line-height: 1.35; color: var(--grey);
@@ -379,7 +381,7 @@ button { font: inherit; color: inherit; }
 .ma-col em { font-style: normal; color: var(--grey); } /* JS brightens to --text on scroll */
 
 .orchard-logo { display: flex; align-items: center; }
-.orchard-logo img { height: 2.125em; display: block; }
+.orchard-logo img { height: 3em; display: block; }
 
 /* ═══════════════════════════════════════════════════════
    BACKGROUND
@@ -543,7 +545,7 @@ button { font: inherit; color: inherit; }
    FOOTER
 ═══════════════════════════════════════════════════════ */
 .footer { overflow: hidden; }
-.footer-top { padding: var(--space-l) var(--margin) var(--space-m); }
+.footer-top { padding: calc(var(--space-l) * 2) var(--margin); } /* contact reads as its own full section */
 .footer-links { display: flex; justify-content: space-between; width: 100%; align-items: flex-start; }
 
 /* Footer CTA — 3-state copy button */
@@ -894,7 +896,6 @@ body:has([data-cursor]:hover) .cursor {
 
   /* M.A Records */
   .ma-inner { display: flex; flex-direction: column; gap: var(--space-m); }
-  .ma-right { width: 100%; }
 
   /* Background */
   .bg-body  { padding-left: 0; }
@@ -944,9 +945,8 @@ body:has([data-cursor]:hover) .cursor {
   .stat:nth-last-child(2) { border-bottom: 1px solid var(--border); }
   .stat:last-child        { border-bottom: none; }
 
-  /* About + MA — stack inner columns */
+  /* About — stack inner columns */
   .about-cols { flex-direction: column; }
-  .ma-cols    { flex-direction: column; }
 
   /* Philosophy center — left align */
   .phil-center      { justify-content: flex-start; }
@@ -974,9 +974,6 @@ body:has([data-cursor]:hover) .cursor {
   /* About inner columns — stack */
   .about-cols { flex-direction: column; }
 
-  /* M.A Records inner columns — stack */
-  .ma-cols { flex-direction: column; }
-
   /* Services */
   .svc-row { padding: var(--space-s) var(--margin); }
 
@@ -989,7 +986,6 @@ body:has([data-cursor]:hover) .cursor {
   .phil-item  { padding-right: 0; }
 
   /* Footer */
-  .footer-top { padding: var(--space-l) var(--margin) var(--space-m); }
   .footer-cta-text-wrap { overflow: visible; clip-path: inset(0 -999em); }
   .footer-bottom { padding-left: 1em; padding-right: 1em; }
 
