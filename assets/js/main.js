@@ -543,13 +543,43 @@ function initBasicCustomCursor() {
   });
 }
 
-/* ─── 13. EMAIL MAILTO ───────────────────────────────────── */
+/* ─── 13. EMAIL — copy to clipboard + open mail client ───── */
+function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    return navigator.clipboard.writeText(text).catch(() => copyTextFallback(text));
+  }
+  return copyTextFallback(text);
+}
+
+// Fallback for browsers without (or refusing) the async Clipboard API
+function copyTextFallback(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', '');
+  ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+  document.body.appendChild(ta);
+  ta.select();
+  const ok = document.execCommand('copy');
+  ta.remove();
+  return ok ? Promise.resolve() : Promise.reject();
+}
+
 function initCopyEmailClipboard() {
   document.querySelectorAll('[data-copy-button]').forEach(btn => {
+    let resetTimer;
     btn.addEventListener('click', () => {
       const email = btn.getAttribute('data-copy-email') ||
         btn.querySelector('[data-copy-email-element]')?.textContent.trim();
       if (!email) return;
+
+      // Copy first (needs the click's user activation), show "Copied!" briefly
+      copyText(email).then(() => {
+        btn.setAttribute('data-copy-button', 'copied');
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => btn.setAttribute('data-copy-button', ''), 2000);
+      }).catch(() => {});
+
+      // …and open the mail client at the same time
       window.location.href = 'mailto:' + email;
     });
   });
