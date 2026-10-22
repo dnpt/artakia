@@ -79,10 +79,11 @@ function initNumberOdometer() {
   document.querySelectorAll('[data-odometer-element]').forEach(el => {
     const target = parseInt(el.textContent.trim(), 10);
     const dur    = parseFloat(el.dataset.odometerDuration ?? '1.8');
+    const from   = parseInt(el.dataset.odometerStart ?? '0', 10);
     if (isNaN(target)) return;
 
     gsap.fromTo(el,
-      { textContent: 0 },
+      { textContent: from },
       {
         textContent: target,
         duration: dur,
